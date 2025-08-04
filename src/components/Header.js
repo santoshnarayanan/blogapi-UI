@@ -14,8 +14,9 @@ export default function Header() {
         elevation={0}
         sx={{
           bgcolor: "white",
-          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-          color: "black",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          color: "text.primary",
         }}
       >
         <Container maxWidth="lg">
