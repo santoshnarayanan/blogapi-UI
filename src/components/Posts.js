@@ -1,84 +1,72 @@
-// src/components/Posts.js
 import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import CardHeader from "@mui/material/CardHeader";
 
 const Posts = ({ posts }) => {
-  if (!posts || posts.length === 0) {
-    return (
-      <Container maxWidth="lg">
-        <Typography
-          variant="h5"
-          align="center"
-          color="text.secondary"
-          paragraph
-        >
-          No posts available.
-        </Typography>
-      </Container>
-    );
-  }
+  if (!posts || posts.length === 0) return <p>Can not find any posts, sorry</p>;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Grid container spacing={4}>
+    <Container maxWidth="md" component="main">
+      <Grid container spacing={5} alignItems="flex-start">
         {posts.map((post) => (
-          <Grid item key={post.id} xs={12} sm={6} md={4}>
-            <Card>
-              {/* Card Header */}
-              <CardHeader
-                sx={{
-                  backgroundColor: (theme) =>
-                    theme.palette.mode === "light"
-                      ? theme.palette.grey[200]
-                      : theme.palette.grey[700],
-                }}
-                title={post.title}
-              />
-
-              {/* Post Image */}
+          <Grid item key={post.id} xs={12} md={4}>
+            <Card
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: "grey.100",
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
+            >
+              {/* Person image at the top */}
               <CardMedia
+                component="img"
+                height="240"
+                image={
+                  post.image || "https://randomuser.me/api/portraits/men/32.jpg"
+                }
+                alt={post.title}
                 sx={{
-                  paddingTop: "56.25%", // 16:9 aspect ratio
+                  objectFit: "cover",
                 }}
-                image={post.image}
-                title={post.title}
               />
 
-              {/* Card Content */}
+              {/* Content below image */}
               <CardContent>
                 <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="h2"
                   sx={{
                     fontSize: "16px",
                     textAlign: "left",
-                    fontWeight: 600,
+                    fontWeight: 500,
                   }}
-                  gutterBottom
-                  variant="h5"
-                  component="h2"
                 >
-                  {post.title}
+                  {post.title.length > 50
+                    ? `${post.title.substr(0, 50)}...`
+                    : post.title}
                 </Typography>
-
                 <Typography
+                  variant="body2"
+                  color="text.secondary"
                   sx={{
                     display: "flex",
                     justifyContent: "left",
                     alignItems: "baseline",
                     fontSize: "12px",
                     textAlign: "left",
-                    mb: 2,
                   }}
-                  variant="body2"
-                  color="text.secondary"
-                  component="p"
                 >
-                  {post.excerpt}
+                  {post.excerpt.length > 60
+                    ? `${post.excerpt.substr(0, 60)}...`
+                    : post.excerpt}
                 </Typography>
               </CardContent>
             </Card>

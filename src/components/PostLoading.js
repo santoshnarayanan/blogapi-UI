@@ -1,14 +1,13 @@
 import React from "react";
 
 function PostLoading(Component) {
-  return function PostLoadingComponent({ isLoading, posts, ...props }) {
-    if (!isLoading) return <Component posts={posts} {...props} />;
+  return function PostLoadingComponent({ isLoading, ...props }) {
+    if (!isLoading) return <Component {...props} />;
     return (
-      <div className="post-loading">
-        <h2>Loading...</h2>
-      </div>
+      <p style={{ fontSize: "25px" }}>
+        We are waiting for the data to load!...
+      </p>
     );
   };
 }
-
 export default PostLoading;
