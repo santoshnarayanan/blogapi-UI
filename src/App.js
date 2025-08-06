@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Posts from "./components/Posts";
+import PostLoadingComponent from "./components/PostLoading";
 
-class connectionExample extends React.Component {
-  componentDidMount() {
-    const apiUrl = 'http://127.0.0.1:8000/api/';
+function App() {
+  const PostLoading = PostLoadingComponent(Posts);
+  const [appState, setAppState] = useState({
+    loading: false,
+    posts: null,
+  });
+
+  useEffect(() => {
+    setAppState({ loading: true });
+    const apiUrl = `http://127.0.0.1:8000/api/`;
     fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Data fetched successfully:', data);
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+      .then((data) => data.json())
+      .then((posts) => {
+        setAppState({ loading: false, posts: posts });
       });
-  }
-  render() {
-    return (
-      <div>
-        <h1>Connection Example</h1>
-        <p>This is a simple example of a React component.</p>
-      </div>
-    );
-  }
+  }, [setAppState]);
+  return (
+    <div className="App">
+      <h1>Latest Posts</h1>
+      <PostLoading isLoading={appState.loading} posts={appState.posts} />
+    </div>
+  );
 }
-export default connectionExample;
+export default App;
